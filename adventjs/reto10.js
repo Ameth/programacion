@@ -36,21 +36,13 @@ A tener en cuenta
 
 */
 function checkJump(heights) {
-  let ctrl = 1;
+  const left = heights.splice(0, heights.indexOf(Math.max(...heights)));
+  const conditionLeft = left.slice(1).every((l, i) => l >= left[i]);
+  const conditionRight = heights.slice(1).every((h, i) => h <= heights[i]);
 
-  heights.forEach((item, index, array) => {
-    if (array[index + 1] != "undefined") {
-      if (array[index + 1] > item) {
-        if (ctrl !== 1) {
-          ctrl++;
-        }
-      } else if (array[index + 1] < item) {
-        if (ctrl == 1) {
-          ctrl++;
-        }
-      }
-    }
-  });
-
-  return ctrl === 2 ? true : false;
+  return conditionLeft && conditionRight && !!left.length && heights.length > 1;
 }
+
+const heights = [1, 2, 3, 2, 1, 2, 3];
+
+console.log(checkJump(heights));
